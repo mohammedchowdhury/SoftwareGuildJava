@@ -10,7 +10,7 @@ public class WindowMaster {
 //    The trim for the windows cost $2.25 per linear foot.
 
     public static void main(String[] args) {
-        int height,width,area, perimeter;
+        float height,width,area, perimeter;
         double cost;
         height = getUserInput("Enter Height");
         width = getUserInput("Enter Width");
@@ -23,24 +23,25 @@ public class WindowMaster {
         System.out.println("Window area = " + area);
         System.out.println("Window perimeter = " + perimeter);
         System.out.println("Total Cost =  " + cost);
-        
+
     }
 
-    public static int getUserInput(String message){
+    public static float getUserInput(String message){
         Scanner myScanner  = new Scanner(System.in);
         boolean isValid = false;
-        int number=0;
+        float number=0;
         do {
             try {
                 System.out.println(message);
-                String input = myScanner.nextLine();
-                number = Integer.parseInt(input);
+                String input = myScanner.nextLine();// getting a user String
+                number = Float.parseFloat(input); //then converting it your self to a format we want
                 if (number >= 0) { //validating the number is greater than 0
                     isValid = true;
                     break;
                 }
             } catch(NumberFormatException ex) {
                 System.out.println("That was not a whole number!  "+ ex);
+               // ex.printStackTrace();
             }
             System.out.println(number);
         } while(isValid == false);
