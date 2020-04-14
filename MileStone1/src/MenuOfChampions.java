@@ -25,12 +25,6 @@ public class MenuOfChampions {
         System.out.println("             "+formatter.format(food3P)+" ***** "+food3);
 
 
-
-
-//
-//        $ 500.00 *** Slice of Big Rico Pizza
-//        $ 2.00 ***** Invisible Strawber
-
     }
 }
 //    Type your code into a new Java class named MenuOfChampions.
