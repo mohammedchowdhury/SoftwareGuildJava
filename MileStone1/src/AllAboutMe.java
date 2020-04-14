@@ -88,7 +88,7 @@ public class AllAboutMe {
                     break;
                 }
             } catch (NullPointerException ex) {
-                System.out.println("That was not a whole number!  " + ex);
+                System.out.println("That was not a String!  " + ex);
                 // ex.printStackTrace();
             }
 

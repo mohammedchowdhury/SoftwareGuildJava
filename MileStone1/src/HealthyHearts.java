@@ -1,18 +1,27 @@
 import java.util.Scanner;
 
-public class BestAdderEver {
+public class HealthyHearts {
     public static void main(String[] args) {
-        int num1,num2,num3;
-        num1 = getUserInputNumber("Enter a number :");
-        num2 = getUserInputNumber("Enter a number :");
-        num3 = getUserInputNumber("Enter a number :");
-        int sum = num1+num2+num3;
-        System.out.println(num1+" + "+num2+" + "+num3+" = "+sum);
+
+        int age, maxHeart, heartRate50, heartRate85;
+
+        System.out.println("What is your age?");
+        age = getUserInputNumber("Age : ");
+        maxHeart = 220 - age;
+        heartRate50 = (int) (maxHeart*.50);
+        heartRate85 = (int) (maxHeart*.85);
+        System.out.println("The maximum heart rate should be "+maxHeart);
+
+        System.out.println("The target heart rate zone is "+heartRate50 +" - "+heartRate85+" of the maximum.");
 
 
     }
 
-
+//    Make a calculator app that asks the user for their age and then
+//    uses this value to calculate and display the healthy heart rate range they should use for exercising.
+//
+//        The maximum heart rate should be 220 - their age.
+//        The target heart rate zone is 50 - 85% of the maximum.
 
     public static int getUserInputNumber(String message) {
         Scanner myScanner = new Scanner(System.in);
@@ -35,10 +44,5 @@ public class BestAdderEver {
         } while (isValid == false);
         return number;
     }
+
 }
-//    Type your code into a Visual Studio project named BestAdderEver.
-//        Write a program that stores three different numbers in different variables.
-//        Add those variables together and store that in a new variable.
-//        Display the result as a single math statement, like 1 + 2 + 3 = 6.
-//        After completing all of these exercises, take time to record what you
-//        learned and other thoughts in your engineer's notebook for future reference.
