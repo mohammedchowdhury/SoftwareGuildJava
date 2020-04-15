@@ -4,8 +4,6 @@ public class PassingTheTuringTest {
     public static void main(String[] args) {
         String name, favColor, favFruit;
         int favNum;
-
-
         System.out.println("Hello there!");
         System.out.println("What's your name?");
         name = getUserInputString("Name : ");
@@ -20,14 +18,10 @@ public class PassingTheTuringTest {
         System.out.println("Speaking of favorites, what's your favorite number?");
         favNum = getUserInputNumber("favorite number : ");
 
-
         System.out.println(favNum +" is a cool number. Mine's -7");
         System.out.println("Did you know "+ favNum+ " * -7 is "+ (-7*favNum)+"? That's a cool number too!");
         System.out.println("Well, thanks for talking to me, "+name+"!");
-
     }
-
-
 //        Ask the user for their name.
 //        Display that name and tell them yours (or your AI's name!).
 //        Ask them for their favorite color.
