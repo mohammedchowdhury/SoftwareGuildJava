@@ -4,9 +4,33 @@ import java.util.Arrays;
 import java.util.Random;
 import java.util.Scanner;
 
+// notes fixme
+// todo
+// format option+command +L
+
 public class ZZZPlayGround {
     public static void main(String[] args) {
-        NumberFormat format = NumberFormat.getCurrencyInstance();
-        System.out.println(format.format(1.123));
+        Random rand = new Random();
+
+       for(int a=0;a<100;a++){
+
+           System.out.println(rand.nextInt(10)+1);
+
+       }
+
+
+    }
+
+
+    /**
+     *  this is a doc
+     * @param x
+     * @param y
+     */
+    public static void add(int x,int y){
+        System.out.println(x+y);
+
     }
 }
+
+
