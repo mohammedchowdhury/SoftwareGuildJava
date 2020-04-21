@@ -14,7 +14,7 @@ public class ZZZPlayGround {
 
        for(int a=0;a<100;a++){
 
-           System.out.println(rand.nextInt(10)+1);
+           System.out.println(rand.nextInt(3)+1);
 
        }
 
