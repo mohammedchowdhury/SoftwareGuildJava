@@ -5,23 +5,14 @@ public class HealthyHearts {
 
         int age, maxHeart, heartRate50, heartRate85;
 
-        System.out.println("What is your age?");
-        age = getUserInputNumber("Age : ");
+        age = getUserInputNumber("What is your age? ");
         maxHeart = 220 - age;
-        heartRate50 = (int) (maxHeart*.50);
-        heartRate85 = (int) (maxHeart*.85);
-        System.out.println("The maximum heart rate should be "+maxHeart);
-
-        System.out.println("The target heart rate zone is "+heartRate50 +" - "+heartRate85+" of the maximum.");
-
+        heartRate50 = (int) Math.ceil(maxHeart * .5);
+        heartRate85 = (int) Math.ceil(maxHeart * .85);
+        System.out.println("The maximum heart rate should be " + maxHeart + " beats per minute");
+        System.out.println("The target HR Zone is " + heartRate50 + " - " + heartRate85 + " beats per minute.");
 
     }
-
-//    Make a calculator app that asks the user for their age and then
-//    uses this value to calculate and display the healthy heart rate range they should use for exercising.
-//
-//        The maximum heart rate should be 220 - their age.
-//        The target heart rate zone is 50 - 85% of the maximum.
 
     public static int getUserInputNumber(String message) {
         Scanner myScanner = new Scanner(System.in);
@@ -29,7 +20,7 @@ public class HealthyHearts {
         int number = 0;
         do {
             try {
-                System.out.println(message);
+                System.out.print(message);
                 String input = myScanner.nextLine();// getting a user String
                 number = Integer.parseInt(input); //then converting it your self to a format we want
                 if (number >= 0) { //validating the number is greater than 0

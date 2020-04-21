@@ -10,13 +10,8 @@ import java.util.Scanner;
 
 public class ZZZPlayGround {
     public static void main(String[] args) {
-        Random rand = new Random();
+   int x = args.length;
 
-       for(int a=0;a<100;a++){
-
-           System.out.println(rand.nextInt(3)+1);
-
-       }
 
 
     }
