@@ -42,6 +42,9 @@ public class DogGenetics {
 
     }
     public static int getRandomInput(int max){
+        if(max==0){
+            return 0;
+        }
         Random rand = new Random();
         return rand.nextInt(max)+1;
     }

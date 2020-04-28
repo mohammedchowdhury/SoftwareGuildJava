@@ -3,31 +3,20 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package animalAndPetHierarchy;
+package ExerciseRefactorIntoObjects;
 
 /**
  *
  * @author mohammedchowdhury
  */
-public class main {
+public class App {
+    
     public static void main(String[] args) {
-
-//  Animal c = new Fish();
-//c.play();
-//c.walk();
-//c.eat();
-
-//Animal d = new Spider();
-//d.play();
-//d.walk();
-//d.eat();
-//         
-
-Pet e = new Cat();
-e.play();
-//e.walk();
-//e.eat();
-//        
+        //Factorizer.RunMe();
+        //InterestCalculator.RunMe();
+        //LuckySevens.RunMe();
+        //RockPaperScissors.RunMe();
+        System.out.println((double)4/3);
     }
     
 }

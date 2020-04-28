@@ -3,31 +3,16 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package animalAndPetHierarchy;
+package JavaClassModel;
 
 /**
  *
  * @author mohammedchowdhury
  */
-public class main {
+public class App {
     public static void main(String[] args) {
-
-//  Animal c = new Fish();
-//c.play();
-//c.walk();
-//c.eat();
-
-//Animal d = new Spider();
-//d.play();
-//d.walk();
-//d.eat();
-//         
-
-Pet e = new Cat();
-e.play();
-//e.walk();
-//e.eat();
-//        
+        Person joe = new Person("Joe",12,new Address("123 Street", "New York", "11111")); 
+        System.out.println(joe.toString());
     }
     
 }
