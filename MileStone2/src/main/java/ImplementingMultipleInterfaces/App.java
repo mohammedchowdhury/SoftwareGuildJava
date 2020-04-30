@@ -9,14 +9,16 @@ package ImplementingMultipleInterfaces;
  *
  * @author mohammedchowdhury
  */
-public interface Vehicle {
-    public void moveForward(int milesPerHour);
-    public void moveBackward(int milesPerHour);
-    public void stop();
+public class App {
     
-    public void turnLeft();
-    public void turnRight();
+    public static void main(String[] args) {
+        
+        Ambulance am = new Ambulance(); 
+        Vehicle em = new Ambulance();
+        
+        
+        
+        
+    }
     
-    public void engineOn();
-    public void engineOff();
 }
