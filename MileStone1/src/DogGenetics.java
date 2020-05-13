@@ -34,6 +34,7 @@ public class DogGenetics {
 
         temp = getRandomInput(max);
         System.out.println(temp+"% Common Cur");
+
         max = max-temp;
 
        // temp = getRandomInput(max);

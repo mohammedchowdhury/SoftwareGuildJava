@@ -23,7 +23,7 @@ public class HealthyHearts {
                 System.out.print(message);
                 String input = myScanner.nextLine();// getting a user String
                 number = Integer.parseInt(input); //then converting it your self to a format we want
-                if (number >= 0) { //validating the number is greater than 0
+                if (number >= 0 || number< 150) { //validating the number is greater than 0
                     isValid = true;
                     break;
                 }

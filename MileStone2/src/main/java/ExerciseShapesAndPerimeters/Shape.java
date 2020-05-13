@@ -9,7 +9,7 @@ package ExerciseShapesAndPerimeters;
  *
  * @author mohammedchowdhury
  */
-  class Shape {
+  abstract class Shape {
     String color; 
     double area,perimeter; 
     
@@ -24,9 +24,5 @@ package ExerciseShapesAndPerimeters;
     public double getArea(){
         return 0;  
     }
-    
-    
-    
-    
-    
+
 }
