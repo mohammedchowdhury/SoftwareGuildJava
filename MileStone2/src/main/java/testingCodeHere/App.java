@@ -12,6 +12,7 @@ import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
@@ -86,7 +87,22 @@ public class App {
 //        
 //       ArrayList<Integer> list = new ArrayList<Integer>(map.keySet());
 
-    print(1,2,39,"aa",12.11); 
+ //   print(1,2,39,"aa",12.11); 
+ 
+// Map<String,String> map = new HashMap<String,String>(); 
+// map.put("1", "11"); 
+// 
+//        System.out.println(map.remove("8"));
+
+    List<String> list = new ArrayList<String>(); 
+    
+    list.add("1"); 
+    list.add("2"); 
+    
+    boolean aa = list.remove("jj"); 
+        System.out.println(aa);
+    
+    
 
     }
     
