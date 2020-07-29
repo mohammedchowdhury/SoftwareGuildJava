@@ -1,0 +1,2 @@
+2020-07-27T13:17:05.675878 : 10,Randy Hash,WA,9.25,Tile,300.0,3.50,4.15,1050.00,1245.00,212.29,2507.29,06-06-2021 Was Successfully added
+2020-07-27T13:17:47.341766 : Order successfully removed. Date: 2021-06-06 Order Number: 10

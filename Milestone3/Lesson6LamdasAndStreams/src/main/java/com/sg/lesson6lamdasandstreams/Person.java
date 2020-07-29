@@ -12,7 +12,7 @@ package com.sg.lesson6lamdasandstreams;
 public class Person {
 
     private String name;
-    private int age;
+    private static int age;
 
     public Person(String name, int age) {
         this.name = name; 

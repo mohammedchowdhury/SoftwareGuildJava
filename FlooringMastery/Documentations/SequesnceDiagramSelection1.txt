@@ -1,0 +1,13 @@
+Title View All Order Selection 1 Display Orders
+View -> Controller
+Controller -> View : getDate()  
+View --> Controller : LocalDate date
+Controller -> Service : getOrders(LocalDate date);
+Service -> OrderDaoImpl : getOrders(LocalDate date);
+OrderDaoImpl --> Service : List<Order> orders
+Service --> Controller :  : List<Order> orders
+Controller --> View : displayOrders(List<Order> orders)
+
+ 
+        
+ 

@@ -1,0 +1,125 @@
+@startuml
+
+title Classes - Class Diagram
+
+
+package com.sg.classroster{
+
++class ClassRosterController {
+    - ClassRosterView view;
+    - ClassRosterDao dao;
+    
+    +ClassRosterController(view : ClassRosterView, dao : ClassRosterDao); 
+    +run(): void
+    -getMenuSelection(): int
+    -createStudent() throws ClassRosterDaoException : void
+    -listStudents() throws ClassRosterDaoException : void
+    -viewStudent() throws ClassRosterDaoException : void 
+    -removeStudent() throws ClassRosterDaoException : void 
+    -unknownCommand() : void 
+    -exitMessage() : void 
+    }
+}
+
+package com.sg.classroster.dao{
+
++interface ClassRosterDao{
+    +addStudent(studentId : String, student : Student) throws ClassRosterDaoException : Student
+    +getAllStudents() throws ClassRosterDaoException : List<Student> 
+    +getStudent(studentId : String) throws ClassRosterDaoException : Student
+    +removeStudent(String : studentId) throws ClassRosterDaoException : Student 
+}
+
++class ClassRosterDaoFileImpl implements ClassRosterDao{
+
+    + static final String ROSTER_FILE = "roster.txt";
+    + static final String DELIMITER = "::";
+    - Map<String, Student> students = new HashMap<>;
+
+    +addStudent(studentId : String, student : Student) throws ClassRosterDaoException : Student
+    +getAllStudents() throws ClassRosterDaoException : List<Student> 
+    +getStudent(studentId : String) throws ClassRosterDaoException : Student
+    +removeStudent(studentId : String) throws ClassRosterDaoException : Student 
+    -unmarshallStudent(studentAsText : String) : Student
+    -loadRoster() throws ClassRosterDaoExceptio : void
+    -marshallStudent(aStudent : Student) : String
+    -writeRoster() throws ClassRosterDaoException : void
+}
+
++class ClassRosterDaoException extends Exception{
+    public ClassRosterDaoException(message : String) 
+    public ClassRosterDaoException(message : String, cause : Throwable) 
+}
+}
+
+package com.sg.classroster.dto{
++class Student {
+    -firstName : String
+    -lastName : String
+    -studentId : String
+    -cohort : String
+    // Programming Language + cohort month/year  Ex JavaC10320
+
+    +Student(String studentId)
+    +getFirstName() : String
+    +setFirstName(firstName : String) : void
+    +getLastName() : String
+    +setLastName(lastName : String) : void
+    +getStudentId() : String
+    +getCohort() : String
+    +setCohort(cohort : String) : void
+    
+    }
+}
+package com.sg.classroster.ui{
+
++class ClassRosterView{
+
+ +io : UserIO // gets instanciated when the constructor is called
+
+    +ClassRosterView(UserIO io)
+    +printMenuAndGetSelection() : int
+    +getNewStudentInfo() : Student
+    +displayCreateStudentBanner() : void
+    +displayDisplayAllBanner() : void
+    +displayCreateSuccessBanner() : void
+    +displayStudentList(studentList : List<Student>) : void
+    +displayDisplayStudentBanner() : void
+    +getStudentIdChoice() : String
+    +displayStudent(student : Student) : void
+    +displayRemoveStudentBanner() : void
+    +displayRemoveResult(Student studentRecord) : void
+    +displayExitBanner() : void
+    +  displayUnknownCommandBanner() : void
+    +displayErrorMessage(errorMsg : String) : void
+}
+
++interface UserIO {
+    print(String msg) : void
+    readDouble(prompt : String) : double
+    readDouble(prompt : String,min : double, max : double) : double
+    readFloat(prompt : String) : float
+    readFloat(prompt : String, min : float, max : float) : float
+    readInt(prompt : String) : int
+    readInt(prompt : String, min : int, max : int) : int
+    readLong(prompt : String) : long
+    readLong(prompt : String, min : long, max : long) : long
+    readString(prompt : String) : String
+}
+
++class UserIOConsoleImpl implements UserIO{
+    +print(String msg) : void
+    +readDouble(prompt : String) : double
+    +readDouble(prompt : String,min : double, max : double) : double
+    +readFloat(prompt : String) : float
+    +readFloat(prompt : String, min : float, max : float) : float
+    +readInt(prompt : String) : int
+    +readInt(prompt : String, min : int, max : int) : int
+    +readLong(prompt : String) : long
+    +readLong(prompt : String, min : long, max : long) : long
+    +readString(prompt : String) : String
+}
+
+}
+
+@enduml

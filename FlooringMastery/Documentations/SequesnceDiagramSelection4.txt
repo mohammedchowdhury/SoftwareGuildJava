@@ -1,0 +1,11 @@
+Title remove An Order Selection 4
+View -> Controller
+Controller -> View : getDate()
+View -> Controller :  LocalDate date
+Controller -> View : getOrderNumber()
+View -> Controller : int orderNumber
+Controller -> Service : removeOrder(String date, int orderNumber)
+Service -> OrderDaoImpl : removeOrder(String date, int orderNumber) 
+OrderDaoImpl --> Service : Order order
+Service --> Controller : Order order
+Controller -> View : OrderSuccessfullyMessage(Order,String)

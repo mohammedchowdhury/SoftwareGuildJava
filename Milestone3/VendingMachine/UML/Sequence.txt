@@ -1,0 +1,32 @@
+@startuml
+title Purchase Item
+actor View
+View -> Controller
+
+Controller -> View : GetMoney()
+View --> Controller : BigDecimal
+
+Controller -> View : ItemNameToPurchase()
+View --> Controller: String
+
+
+Controller --> Service : purchaseItem()
+Service --> Dao : getItem()
+
+Dao --> Service : Item | null
+
+Service --> Service : validateItem()
+
+Service -->Dao : updateInventory(Item)
+Dao --> Service : Item
+
+Service --> AuditDao : writeLog(Item)
+
+Service --> Controller : Item
+Controller --> View : successfulPurchase(Item)
+View --> Controller : null
+
+Controller --> View : dispenseChange()
+
+View --> ChangeClass : calcuateChange()
+ChangeClass --> View : List<Coin>

@@ -1,0 +1,41 @@
+@startuml
+title Purchase Item
+
+class Controller{
+    purchase() : void
+}
+
+Controller<-->View
+Controller<-->Service
+
+Service-->AuditDao
+
+
+
+class View{
+    GetItemName() : String
+    GetMoney() : BigDecimal
+    printSuccessBanner() : void
+    dispenseChange(): void
+    displayAllItem() : void
+}
+
+class Service{
+    purchaseItem() : 
+    validateItem() : void 
+}
+
+Dao<-->Service
+
+class Dao{
+    getItem() : Item
+    updateItem() : Item : void
+    loadDao() : void
+    martiall() : void
+    unMartial() : void
+    writeToFile() : void
+}
+
+class AuditDao{
+whiteToDao(); 
+}

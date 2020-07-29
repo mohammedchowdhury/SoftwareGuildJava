@@ -1,0 +1,4 @@
+Apple::12/24/1958::A::Joe::Chicken::Shitty Movie
+Go::03/20/2020::A::Tim::Cow::Shitty Movie
+Avatar::01/20/1990::R::Joe::Fox::Good Movie
+Avatar2::01/20/1995::R::Joe::Fox::Bad Movie

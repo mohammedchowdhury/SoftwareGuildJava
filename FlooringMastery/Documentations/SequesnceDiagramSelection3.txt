@@ -1,0 +1,35 @@
+Title edit An Order Selection 3
+View -> Controller
+Controller -> Service : setUp()
+Service -> OrderDaoImpl : setUp()
+
+Controller -> View : getDate()
+View --> Controller :  LocalDate date
+
+Controller -> View : getOrderNumber()
+View --> Controller : Int orderNumber
+
+Controller -> Service : getOrder(LocalDate date, int OrderNumber) 
+Service -> OrderDaoImpl : getOrders(LocalDate date) 
+OrderDaoImpl --> Service : List<Oder> listOfOrders
+Service --> Controller : Order 
+
+Controller -> Service : getProducts() 
+Service -> ProductDaoImpl : getProducts()
+ProductDaoImpl --> Service : List<Product>
+Service -->  Controller : List<Product>
+
+Controller -> Service : getTaxes()
+Service -> TaxesDaoImpl : getTaxes()
+TaxesDaoImpl --> Service : List<Tax> 
+Service --> Controller : List<Tax> 
+
+Controller -> View : editOrder(Order,List<Product>,List<Tax>) 
+
+Controller -> Service : editOrder(Order,Boolean)
+Service -> Service : validateOrder(Order)
+Service -> OrderDaoImpl : editOrder(Order)
+
+OrderDaoImpl --> Service : Order
+Service --> Controller : Order
+Controller -> View : OrderSuccessfullyMessage(order,String)

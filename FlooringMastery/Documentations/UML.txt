@@ -1,0 +1,252 @@
+Package Controller{
+class FlooringMasteryController {
+    - FlooringMasteryView view;
+    - FlooringMasteryService service;
+    - DateTimeFormatter formatter
+
+    + FlooringMasteryController(FlooringMasteryView view, FlooringMasteryService service) 
+    + void run() 
+    - int printMenu() 
+    - void exitMessage()
+    - void displayOrders() 
+    - void addAnOrder() 
+    - void editOrder() 
+    - void removeAnOrder()
+    - void exportData() 
+}
+}
+
+Package DAO{
+interface FlooringMasteryAuditDaoFile {
+    + void writeAuditEntry(String entry) throws FlooringMasteryPersistenceException;
+}
+class FlooringMasteryAuditDaoFileImpl implements FlooringMasteryAuditDaoFile {
+    - static final String AUDIT_FILE = "FileData/Audit/audit.txt";
+    + void writeAuditEntry(String entry) throws FlooringMasteryPersistenceException 
+}
+interface FlooringMasteryExportDao {
+    + int exportData(Map<LocalDate, Map<Integer, Order>> orders) throws FlooringMasteryPersistenceException;
+}
+
+class FlooringMasteryExportDaoImpl implements FlooringMasteryExportDao {
+   - Map<Integer, Order> orders = new TreeMap<Integer, Order>();
+   + void exportDate(Map<String, Map<Integer, Order>> orders) throws FlooringMasteryPersistenceException 
+   - void writeOrder() throws FlooringMasteryPersistenceException
+}
+
+class FlooringMasteryOrderDaoImpl implements FlooringMasteryOrderDao{
+    - DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMddyyyy");
+    - Map<String, Map<LocalDate, Order>> orders = new HashMap<LocalDate, Map<Integer, Order>>();
+    - final String DELIMITER = ",";
+    -  String ORDERS_FILE = "FileData/Orders";
+    -  int largestOrderNumber = 0;
+    
+    + FlooringMasteryOrderDaoImpl(String path) throws FlooringMasteryPersistenceException
+    + FlooringMasteryOrderDaoImpl()
+
+    + List<Order> getOrders(LocalDate date) throws FlooringMasteryPersistenceException
+    + Order addOrder(Order newOrder) throws FlooringMasteryPersistenceException 
+    + Order removeOrder(LocalDate date, int orderNumber) throws FlooringMasteryPersistenceException 
+    - String getOrderDateToString(LocalDate orderDate)
+    + Map<LocalDate, Map<Integer, Order>> getAllOrders() throws FlooringMasteryPersistenceException
+    - void removeFile(String date)
+    + void setUp() throws FlooringMasteryPersistenceException
+    _ Order unmarshallOrders(String productAsText, String dateInString)
+    - void loadOrders() throws FlooringMasteryPersistenceException 
+    - void writeOrder() throws FlooringMasteryPersistenceException 
+}
+interface FlooringMasteryOrderDao {
+    + List<Order> getOrders(LocalDate date) throws FlooringMasteryPersistenceException;
+    + Order addOrder(Order newOrder) throws FlooringMasteryPersistenceException;
+    + Order removeOrder(LocalDate date, int orderNumber) throws FlooringMasteryPersistenceException;
+    + Map<LocalDate, Map<Integer, Order>> getAllOrders() throws FlooringMasteryPersistenceException;
+    + void setUp() throws FlooringMasteryPersistenceException;
+}
+
+class FlooringMasteryPersistenceException extends Exception {
+    + FlooringMasteryPersistenceException(String message)
+    + FlooringMasteryPersistenceException(String message, Throwable cause)
+}
+
+class FlooringMasteryProductDaoImpl implements FlooringMasteryProductDao{
+    - Map<String, Product> products = new HashMap<String, Product>();
+    - String PRODUCT_File = "FileData/Data/Products.txt";
+    - final String DELIMITER = ",";
+    + FlooringMasteryProductDaoImpl(String path)
+    + Product getProduct(String productType) throws FlooringMasteryPersistenceException
+    + List<Product> getProducts() throws FlooringMasteryPersistenceException
+    - Product unmarshallProduct(String productAsText)
+    - void loadProduct() throws FlooringMasteryPersistenceException
+}
+interface FlooringMasteryProductDao {
+    + Product getProduct(String productType) throws FlooringMasteryPersistenceException;
+    + List<Product> getProducts() throws FlooringMasteryPersistenceException;
+}
+
+class FlooringMasteryTaxesDaoImpl implements FlooringMasteryTaxesDao {
+    - Map<String, Tax> taxes = new HashMap<String, Tax>(); //state : Taxes
+    - final String DELIMITER = ",";
+    - String TAX_File = "FileData/Data/Taxes.txt";
+    + FlooringMasteryTaxesDaoImpl(String path) 
+    + FlooringMasteryTaxesDaoImpl()
+    + Tax getTax(String state) throws FlooringMasteryPersistenceException
+    + List<Tax> getTaxes() throws FlooringMasteryPersistenceException
+    - Tax unmarshallTax(String taxAsText) 
+    - void loadTax() throws FlooringMasteryPersistenceException 
+}
+interface FlooringMasteryTaxesDao {
+    + Tax getTax(String state) throws FlooringMasteryPersistenceException;
+    + List<Tax> getTaxes() throws FlooringMasteryPersistenceException;
+}
+
+}
+
+Package DTO{
+class Order {
+    - static int orderCounter = 0;
+    - int orderNumber = 0;
+    - String customerName;
+    - String state;
+    - BigDecimal taxRate;
+    - BigDecimal area;
+    - String productType;
+    - BigDecimal costPerSquareFoot;
+    - BigDecimal laborCostPerSquareFoot;
+    - BigDecimal materialCost;
+    - BigDecimal laborCost;
+    - BigDecimal tax;
+    - BigDecimal total;
+    - LocalDate orderDate;
+    - String orderDateAsString;
+    - String exportDateasString;
+    + Order(String orderNumber, String customerName, String state, String taxRate, String productType, String area, String costPerSquareFoot, String laborCostPerSquareFoot)
+    + Order(String customerName, String state, String taxRate, String productType, String area, String costPerSquareFoot, String laborCostPerSquareFoot) 
+    + void setOrderCounter(int orderCounter) 
+    + int getOrderNumber() 
+    + String getCustomerName() 
+    + String getState() 
+    + BigDecimal getTaxRate() 
+    + BigDecimal getArea() 
+    + String getProductType() 
+    + BigDecimal getCostPerSquareFoot() 
+    + BigDecimal getLaborCostPerSquareFoot() 
+    + BigDecimal getMaterialCost() 
+    + BigDecimal getLaborCost()
+    + BigDecimal getTax()
+    + BigDecimal getTotal() 
+    + LocalDate getOrderDate() 
+    + void setOrderDate(String orderDate) 
+    + String getOrderDateAsString() 
+    + String getExportDateasString() 
+    + String orderToStringExportFile() 
+    + String orderToStringOrderFile() 
+    + String oderToStringToView()
+    }
+    class Product {
+    - String productType; 
+    - BigDecimal costPerSquareFoot; 
+    - BigDecimal laborCostPerSquareFoot; 
+    + Product(String productType,String costPerSquareFoot, String laborCostPerSquareFoot)
+    + String getProductType()
+    + BigDecimal getCostPerSquareFoot()
+    + BigDecimal getLaborCostPerSquareFoot() 
+    + String toString() 
+}
+class Tax {
+    - String state
+    - String stateName; 
+    - BigDecimal taxRate; 
+    + Tax(String state,String stateName, String taxRate)
+    + String getState() 
+    + String getStateName() 
+    + BigDecimal getTaxRate() 
+}
+}
+
+Package Service{
+class FlooringMasteryServiceImpl implements FlooringMasteryService{
+    - FlooringMasteryOrderDao orderDao;
+    - FlooringMasteryProductDao productDao;
+    - FlooringMasteryTaxesDao taxDao;
+    - FlooringMasteryExportDao exportDao;
+    - FlooringMasteryAuditDaoFile auditDao;
+    + FlooringMasteryServiceImpl(FlooringMasteryOrderDao orderDao, FlooringMasteryProductDao productDao, FlooringMasteryTaxesDao taxDao, FlooringMasteryExportDao exportDao, FlooringMasteryAuditDaoFile auditDao)
+    + List<Order> getOrders(LocalDate date) throws NoOrderException, FlooringMasteryPersistenceException
+    + List<Tax> getTaxes() throws FlooringMasteryPersistenceException, NoTaxesFoundException 
+    + List<Product> getProducts() throws FlooringMasteryPersistenceException, NoProductsFoundException
+    + void setUp() throws FlooringMasteryPersistenceException 
+    + Order addOrder(Order tempOrder,boolean edited) throws FlooringMasteryPersistenceException, InvalidOrderException
+    + Order getOrder(LocalDate date, int orderNumber) throws NoOrderException, FlooringMasteryPersistenceException
+    + Order removeOrder(LocalDate date, int orderNumber) throws NoOrderException, FlooringMasteryPersistenceException
+    + int exportData() throws NoOrderException, FlooringMasteryPersistenceException
+    - void validateOrder(Order order) throws InvalidOrderException
+    - void writeToAudit(String message) throws FlooringMasteryPersistenceException
+}
+
+interface FlooringMasteryService {
+    + List<Order> getOrders(LocalDate date) throws NoOrderException, FlooringMasteryPersistenceException;
+    + List<Tax> getTaxes() throws FlooringMasteryPersistenceException,NoTaxesFoundException;
+    + List<Product> getProducts() throws FlooringMasteryPersistenceException,NoProductsFoundException;
+    + void setUp() throws FlooringMasteryPersistenceException;
+    + Order addOrder(Order tempOrder,boolean edited) throws FlooringMasteryPersistenceException,InvalidOrderException;
+    + Order getOrder(LocalDate date, int orderNumber) throws NoOrderException, FlooringMasteryPersistenceException;
+    + Order removeOrder(LocalDate date, int orderNumber) throws NoOrderException, FlooringMasteryPersistenceException;
+    + int exportData() throws NoOrderException, FlooringMasteryPersistenceException;
+}
+class NoTaxesFoundException extends Exception {
+    + NoTaxesFoundException(String message) 
+    + NoTaxesFoundException(String message, Throwable cause) 
+}
+class NoProductsFoundException extends Exception {
+    + NoProductsFoundException(String message) 
+    + NoProductsFoundException(String message, Throwable cause)
+}
+class NoOrderException extends Exception {
+    public NoOrderException(String message) 
+    public NoOrderException(String message,  Throwable cause)
+}
+
+class InvalidOrderException extends Exception {
+    + InvalidOrderException(String message) 
+    + InvalidOrderException(String message,  Throwable cause) 
+}
+
+
+
+}
+
+Package View{
+class FlooringMasteryView {
+    - UserIO io;
+    + FlooringMasteryView(UserIO io) 
+    + int printMainMenu() 
+    + LocalDate getDate()
+    + void printErrorNoOrders(String date)
+    + void printErrorNoProducts() 
+    + void printErrorNoTax()
+    + void printErrorFileCannotBeRead()
+    + void printInvalidDataa()
+    + void displayOrders(List<Order> orders)
+    + LocalDate getFutureDate() 
+    + String getName() 
+    - boolean validateName(String name)
+    + Tax pickTax(List<Tax> listOfTaxAndStates) 
+    + Product pickProduct(List<Product> listOfProducts)
+    + BigDecimal getArea()
+    + boolean keepOrder(Order order)
+    + int getOrderNumber()
+    + Order editOrder(Order order, List<Product> products, List<Tax> taxes) 
+    + void OrderSuccessfullyMessage(Order order, String message)
+    + void numberItemsExported(int x,String message)
+    + void goodbyeMessage()
+}
+}
+
+Controller -> View
+Controller -> Service 
+Service -> DAO
+DAO -> DTO
+Service -> DTO
+Controller -> DTO
+View ->DTO
+

@@ -1,0 +1,3 @@
+2020-06-15T19:07:11.244868 : Apple Purchase Successful
+2020-06-15T19:07:25.392446 : Apple Successfully Removed
+2020-06-15T19:07:46.756944 : Chips Successfully Removed

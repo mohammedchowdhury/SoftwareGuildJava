@@ -1,0 +1,3 @@
+Apple::0.50::10
+Corn Dogs::2::10
+Chocolate::1.25::20

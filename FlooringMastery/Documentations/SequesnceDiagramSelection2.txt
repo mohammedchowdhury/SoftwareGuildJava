@@ -1,0 +1,33 @@
+Title add An Order Selection 2
+View -> Controller
+Controller -> Service : setUp()
+Service -> OrderDaoImpl : setUp()
+Controller -> View : getFutureDate()
+View --> Controller :LocalDate date
+Controller -> View : getName()
+View --> Controller : String name
+
+Controller -> Service : getTaxes()
+Service -> TaxesDaoImpl : getTaxes()
+TaxesDaoImpl --> Service : List<Tax> 
+Service --> Controller : List<Tax> 
+
+Controller -> View : pickTax(List<Tax>)
+View --> Controller : Tax pickedTax
+
+Controller -> Service : getProducts() 
+Service -> ProductDaoImpl : getProducts()
+ProductDaoImpl --> Service : List<Product>
+Service -->  Controller : List<Product>
+Controller -> View : pickProduct(List<Product>)
+View --> Controller : Product pickedProduct
+Controller -> View : getArea() 
+View --> Controller : BigDecimal area
+Controller -> View : keepOrder(Order tempOrder) 
+View -> Controller : Boolean 
+Controller -> Service : addOrder(Order)
+Service -> Service : validateOrder(Order)
+Service -> OrderDaoImpl : addOrder(Order)
+OrderDaoImpl --> Service : Order
+Service --> Controller : Order
+Controller -> View : OrderSuccessfullyMessage(Order)
