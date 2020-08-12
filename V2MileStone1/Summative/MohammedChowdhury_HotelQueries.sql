@@ -1,0 +1,93 @@
+use HotelSoftwareGuild; 
+
+-- 1.Write a query that returns a list of reservations that end in July 2023, 
+-- including the name of the guest, the room number(s), and the reservation dates.
+-- 4 Rows are found 
+-- -------------------
+select Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate,Reservation.EndDate
+from Guest,GuestReservation,RoomReservation,Reservation
+where Guest.GuestID = GuestReservation.GuestID and 
+GuestReservation.ReservationID = Reservation.ReservationID and 
+Reservation.ReservationID = RoomReservation.ReservationID and 
+Reservation.ReservationID in (
+select Reservation.ReservationID
+from Reservation
+where EndDate between '2023-07-01'and'2023-07-31'); 
+
+-- 2.Write a query that returns a list of all reservations for rooms with a jacuzzi,
+-- displaying the guest's name, the room number, and the dates of the reservation.
+-- 11 Rows are found 
+-- -------------------
+select Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate,Reservation.EndDate
+from RoomAmenities, RoomNumber,RoomReservation,Reservation,GuestReservation,Guest
+where 
+RoomAmenities.RoomNumberID = RoomNumber.RoomNumberID and 
+RoomNumber.RoomNumberID = RoomReservation.RoomNumberID and 
+RoomReservation.ReservationID = Reservation.ReservationID and 
+Reservation.ReservationID = GuestReservation.ReservationID and 
+GuestReservation.GuestID = Guest.GuestID and 
+RoomAmenities.AmenitiesID = 
+(select AmenitiesID
+from Amenities
+where AmenitiesType = 'jacuzzi'); 
+-- 3.Write a query that returns all the rooms reserved for a specific guest, 
+-- including the guest's name, the room(s) reserved, the starting date of the reservation, 
+-- and how many people were included in the reservation. (Choose a guest's name from the existing data.)
+-- Mohammed Chowdhury
+-- 2 Rows returned 
+-- -------------------
+select Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate, (SUM(Reservation.NumberOfAdults+Reservation.NumberOfChildren)) as 'TotalGuest'
+from Guest,GuestReservation,Reservation,RoomReservation
+where Guest.GuestID = GuestReservation.GuestID and 
+GuestReservation.ReservationID = Reservation.ReservationID and 
+Reservation.ReservationID = RoomReservation.ReservationID and 
+Guest.GuestID = 
+(select Guest.GuestID
+from Guest
+where Guest.GuestFirstName = 'Mohammed' and 
+Guest.GuestLastName = 'Chowdhury')
+GROUP BY Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate; 
+
+-- 4.Write a query that returns a list of rooms, reservation ID, 
+-- and per-room cost for each reservation. The results should include all rooms, 
+-- whether or not there is a reservation associated with the room.
+-- 26 Rows returned, 2 Rooms were never reserved 
+-- -------------------
+select RoomNumber.RoomNumberID,RoomType.Price,Reservation.ReservationID, Reservation.TotalRoomCost
+from RoomNumber
+left outer join RoomType on RoomType.RoomTypeID = RoomNumber.RoomTypeID 
+left outer join RoomReservation on RoomReservation.RoomNumberID = RoomNumber.RoomNumberID 
+left outer join Reservation on RoomReservation.ReservationID = Reservation.ReservationID
+order by RoomReservation.ReservationID; 
+
+-- 5.Write a query that returns all the rooms accommodating at least three guests 
+-- and that are reserved on any date in April 2023.
+-- 0 Rows Returned
+-- -------------------
+select Reservation.ReservationID, Reservation.StartDate,Reservation.EndDate,RoomReservation.RoomNumberID,sum(Reservation.NumberOfAdults+Reservation.NumberOfChildren) 'TotalGuests'
+from Reservation,RoomReservation
+where 
+(Reservation.EndDate between '2023-04-01'and'2023-04-30' or 
+Reservation.StartDate between '2023-04-01'and'2023-04-30')and 
+Reservation.ReservationID = RoomReservation.ReservationID and 
+Reservation.NumberOfAdults+Reservation.NumberOfChildren>2
+group by Reservation.ReservationID, Reservation.StartDate,Reservation.EndDate,RoomReservation.RoomNumberID; 
+-- 6.Write a query that returns a list of all guest names and the number of reservations per guest, 
+-- sorted starting with the guest with the most reservations and then by the guest's last name.
+-- 11 Rows Returned
+-- -------------------
+select Guest.GuestFirstName,Guest.GuestLastName, count(GuestReservation.ReservationID) as 'TotalReservation'
+from Guest
+left outer join GuestReservation on Guest.GuestID = GuestReservation.GuestID
+group BY Guest.GuestFirstName,Guest.GuestLastName
+order by TotalReservation DESC,Guest.GuestLastName ASC ; 
+
+-- 7.Write a query that displays the name, address, 
+-- and phone number of a guest based on their phone number. 
+-- (Choose a phone number from the existing data.)
+-- (917) 917-9170
+-- 1 Row returned
+-- -------------------
+select Guest.GuestFirstName,Guest.GuestLastName,Guest.Address,Guest.Phone
+from Guest
+where Guest.Phone = '(917) 917-9170'; 
