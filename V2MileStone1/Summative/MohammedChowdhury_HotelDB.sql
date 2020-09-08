@@ -56,16 +56,9 @@ CREATE TABLE Reservation(
 	EndDate DATE NOT NULL, 
 	NumberOfAdults TINYINT NOT NULL,
 	NumberOfChildren TINYINT NOT NULL,
-    TotalRoomCost DECIMAL(8,2) NOT NULL
-);
-
--- Table structure for table `GuestReservation`
-CREATE TABLE GuestReservation(
-	GuestID int UNSIGNED NOT NULL,
-    ReservationID int UNSIGNED NOT NULL,
-	PRIMARY KEY pk_GuestReservation (GuestID, ReservationID),
-    FOREIGN KEY fk_GuestReservation_Guest (GuestID) REFERENCES Guest(GuestID),
-    FOREIGN KEY fk_GuestReservation_Reservation (ReservationID) REFERENCES Reservation(ReservationID)
+    TotalRoomCost DECIMAL(8,2) NOT NULL,
+    GuestID int UNSIGNED NOT NULL, 
+    FOREIGN KEY fk_Reservation_Guest(GuestID) REFERENCES Guest(GuestID)
 );
 
 -- Table structure for table `RoomReservation`

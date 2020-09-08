@@ -92,60 +92,33 @@ INSERT INTO Guest(GuestID,GuestFirstName,GuestLastName,Address,City,State,ZIP,Ph
 (12,'Mohammed','Chowdhury','8111 45th ave','New York','NY','11373','(917) 917-9170'); 
 
 -- Data Entry For `Reservation`
-INSERT INTO Reservation(ReservationID,StartDate,EndDate,NumberOfAdults,NumberOfChildren,TotalRoomCost) VALUES
-(1,'2023-02-02','2023-02-04',1,0,299.98 ),
-(2,'2023-02-05','2023-02-10',2,1,999.95 ),
-(3,'2023-02-22','2023-02-24',2,0,349.98 ),
-(4,'2023-03-06','2023-03-07',2,2,199.99 ),
-(5,'2023-03-17','2023-03-20',1,1,524.97 ),
-(6,'2023-03-18','2023-03-23',3,0,924.95 ),
-(7,'2023-03-29','2023-03-31',2,2,349.98 ),
-(8,'2023-03-31','2023-04-05',2,0,874.95 ),
-(9,'2023-04-09','2023-04-13',1,0,799.96 ),
-(10,'2023-04-23','2023-04-24',1,1,174.99 ),
-(11,'2023-05-30','2023-06-02',2,4,1199.97),
-(12,'2023-06-10','2023-06-14',2,0,599.96 ),
-(13,'2023-06-10','2023-06-14',1,0,599.96 ),
-(14,'2023-06-17','2023-06-18',3,0,184.99 ),
-(15,'2023-06-28','2023-07-02',2,0,699.96 ),
-(16,'2023-07-13','2023-07-14',3,1,184.99 ),
-(17,'2023-07-18','2023-07-21',4,2,1259.97),
-(18,'2023-07-28','2023-07-29',2,1,199.99 ),
-(19,'2023-08-30','2023-09-01',1,0,349.98 ),
-(20,'2023-09-16','2023-09-17',2,0,149.99 ),
-(21,'2023-09-13','2023-09-15',2,2,399.98 ),
-(22,'2023-11-22','2023-11-25',2,2,1199.97),
-(23,'2023-11-22','2023-11-25',2,0,449.97 ),
-(24,'2023-11-22','2023-11-25',2,2,599.97 ),
-(25,'2023-12-24','2023-12-28',2,0,699.96 ); 
+INSERT INTO Reservation(ReservationID,StartDate,EndDate,NumberOfAdults,NumberOfChildren,TotalRoomCost,GuestID) VALUES
+(1,'2023-02-02','2023-02-04',1,0,299.98,1),
+(2,'2023-02-05','2023-02-10',2,1,999.95,2),
+(3,'2023-02-22','2023-02-24',2,0,349.98,3),
+(4,'2023-03-06','2023-03-07',2,2,199.99,4),
+(5,'2023-03-17','2023-03-20',1,1,524.97,12),
+(6,'2023-03-18','2023-03-23',3,0,924.95,5),
+(7,'2023-03-29','2023-03-31',2,2,349.98,6),
+(8,'2023-03-31','2023-04-05',2,0,874.95,7),
+(9,'2023-04-09','2023-04-13',1,0,799.96,8),
+(10,'2023-04-23','2023-04-24',1,1,174.99,9),
+(11,'2023-05-30','2023-06-02',2,4,1199.97,10),
+(12,'2023-06-10','2023-06-14',2,0,599.96,11),
+(13,'2023-06-10','2023-06-14',1,0,599.96,11),
+(14,'2023-06-17','2023-06-18',3,0,184.99,5),
+(15,'2023-06-28','2023-07-02',2,0,699.96,12),
+(16,'2023-07-13','2023-07-14',3,1,184.99,8),
+(17,'2023-07-18','2023-07-21',4,2,1259.97,9),
+(18,'2023-07-28','2023-07-29',2,1,199.99,2),
+(19,'2023-08-30','2023-09-01',1,0,349.98,2),
+(20,'2023-09-16','2023-09-17',2,0,149.99,1),
+(21,'2023-09-13','2023-09-15',2,2,399.98,4),
+(22,'2023-11-22','2023-11-25',2,2,1199.97,3),
+(23,'2023-11-22','2023-11-25',2,0,449.97, 1),
+(24,'2023-11-22','2023-11-25',2,2,599.97, 1),
+(25,'2023-12-24','2023-12-28',2,0,699.96, 10); 
 
--- Data Entry For `GuestReservation`
-INSERT INTO GuestReservation(GuestID,ReservationID)  VALUES
-(1,1),
-(2,2),
-(3,3),
-(4,4),
-(12,5),
-(5,6),
-(6,7),
-(7,8),
-(8,9),
-(9,10),
-(10,11),
-(11,12),
-(11,13),
-(5,14),
-(12,15),
-(8,16),
-(9,17),
-(2,18),
-(2,19),
-(1,20),
-(4,21),
-(3,22),
-(1,23),
-(1,24),
-(10,25);
 
 -- Data Entry For `RoomReservation`
 INSERT INTO RoomReservation(ReservationID,RoomNumberID)  VALUES
@@ -176,50 +149,29 @@ INSERT INTO RoomReservation(ReservationID,RoomNumberID)  VALUES
 (25,302);
 
 -- Delete Jeremiah Pendergrass 
-
-
--- -- Delete Tasks first since Task references ProjectWorker.
--- DELETE FROM Task
--- WHERE WorkerId = 2;
-
--- -- Delete ProjectWorker next. 
--- -- That removes Kingsly from all Projects.
--- DELETE FROM ProjectWorker
--- WHERE WorkerId = 2;
-
--- -- Finally, remove Kingsly.
--- DELETE FROM Worker
--- WHERE WorkerId = 2;
-
 SET SQL_SAFE_UPDATES = 0;
 
 -- remove data from RoomReservation
 Delete FROM RoomReservation
 where RoomReservation.ReservationID in
 (select Reservation.ReservationID
-from Guest, Reservation, GuestReservation
-where Guest.GuestFirstName = 'Jeremiah' and 
-Guest.GuestLastName = 'Pendergrass' and 
-GuestReservation.GuestID = Guest.GuestID and 
-Reservation.ReservationID = GuestReservation.ReservationID);  
-
--- remove from Guest Reservation
-Delete FROM GuestReservation
-where GuestReservation.GuestID =
-(select Guest.GuestID
 from Guest
-where Guest.GuestFirstName = 'Jeremiah' and 
-Guest.GuestLastName = 'Pendergrass'); 
+inner join Reservation on 
+Reservation.GuestID = Guest.GuestID 
+and  Guest.GuestFirstName = 'Jeremiah' and 
+Guest.GuestLastName = 'Pendergrass' ); 
 
 -- remove from Reservation
 Delete FROM Reservation
-where Reservation.ReservationID not in
-(select GuestReservation.ReservationID
-from Guest,GuestReservation
-where Guest.GuestID = GuestReservation.GuestID); 
+where Reservation.GuestID in
+(select Guest.GuestID
+from Guest
+where Guest.GuestFirstName = 'Jeremiah' and 
+Guest.GuestLastName = 'Pendergrass' ); 
 
--- remove from Guest
+-- -- remove from Guest
 Delete FROM Guest
 where Guest.GuestFirstName = 'Jeremiah' and 
 Guest.GuestLastName = 'Pendergrass'; 
+
 SET SQL_SAFE_UPDATES = 1;

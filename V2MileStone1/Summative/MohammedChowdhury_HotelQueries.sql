@@ -5,31 +5,27 @@ use HotelSoftwareGuild;
 -- 4 Rows are found 
 -- -------------------
 select Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate,Reservation.EndDate
-from Guest,GuestReservation,RoomReservation,Reservation
-where Guest.GuestID = GuestReservation.GuestID and 
-GuestReservation.ReservationID = Reservation.ReservationID and 
-Reservation.ReservationID = RoomReservation.ReservationID and 
-Reservation.ReservationID in (
-select Reservation.ReservationID
-from Reservation
-where EndDate between '2023-07-01'and'2023-07-31'); 
+from Guest
+inner join Reservation on Reservation.GuestID = Guest.GuestID
+inner join RoomReservation on Reservation.ReservationID = RoomReservation.ReservationID
+where EndDate between '2023-07-01'and'2023-07-31'; 
 
 -- 2.Write a query that returns a list of all reservations for rooms with a jacuzzi,
 -- displaying the guest's name, the room number, and the dates of the reservation.
 -- 11 Rows are found 
 -- -------------------
 select Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate,Reservation.EndDate
-from RoomAmenities, RoomNumber,RoomReservation,Reservation,GuestReservation,Guest
-where 
-RoomAmenities.RoomNumberID = RoomNumber.RoomNumberID and 
-RoomNumber.RoomNumberID = RoomReservation.RoomNumberID and 
-RoomReservation.ReservationID = Reservation.ReservationID and 
-Reservation.ReservationID = GuestReservation.ReservationID and 
-GuestReservation.GuestID = Guest.GuestID and 
-RoomAmenities.AmenitiesID = 
-(select AmenitiesID
 from Amenities
-where AmenitiesType = 'jacuzzi'); 
+inner join RoomAmenities on Amenities.AmenitiesID = RoomAmenities.AmenitiesID and Amenities.AmenitiesType = 'jacuzzi'
+inner join RoomNumber on RoomAmenities.RoomNumberID = RoomNumber.RoomNumberID
+inner join RoomReservation on RoomNumber.RoomNumberID = RoomReservation.RoomNumberID 
+inner join Reservation on RoomReservation.ReservationID = Reservation.ReservationID 
+inner join Guest on Reservation.GuestID = Guest.GuestID; 
+
+-- RoomAmenities.AmenitiesID = 
+-- (select AmenitiesID
+-- from Amenities
+-- where AmenitiesType = 'jacuzzi'); 
 -- 3.Write a query that returns all the rooms reserved for a specific guest, 
 -- including the guest's name, the room(s) reserved, the starting date of the reservation, 
 -- and how many people were included in the reservation. (Choose a guest's name from the existing data.)
@@ -37,15 +33,11 @@ where AmenitiesType = 'jacuzzi');
 -- 2 Rows returned 
 -- -------------------
 select Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate, (SUM(Reservation.NumberOfAdults+Reservation.NumberOfChildren)) as 'TotalGuest'
-from Guest,GuestReservation,Reservation,RoomReservation
-where Guest.GuestID = GuestReservation.GuestID and 
-GuestReservation.ReservationID = Reservation.ReservationID and 
-Reservation.ReservationID = RoomReservation.ReservationID and 
-Guest.GuestID = 
-(select Guest.GuestID
 from Guest
+inner join Reservation on Guest.GuestID = Reservation.GuestID 
+inner join RoomReservation on Reservation.ReservationID = RoomReservation.ReservationID
 where Guest.GuestFirstName = 'Mohammed' and 
-Guest.GuestLastName = 'Chowdhury')
+Guest.GuestLastName = 'Chowdhury'
 GROUP BY Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,Reservation.StartDate; 
 
 -- 4.Write a query that returns a list of rooms, reservation ID, 
@@ -53,9 +45,9 @@ GROUP BY Guest.GuestFirstName,Guest.GuestLastName,RoomReservation.RoomNumberID,R
 -- whether or not there is a reservation associated with the room.
 -- 26 Rows returned, 2 Rooms were never reserved 
 -- -------------------
-select RoomNumber.RoomNumberID,RoomType.Price,Reservation.ReservationID, Reservation.TotalRoomCost
+select RoomNumber.RoomNumberID,Reservation.ReservationID, Reservation.TotalRoomCost
 from RoomNumber
-left outer join RoomType on RoomType.RoomTypeID = RoomNumber.RoomTypeID 
+-- left outer join RoomType on RoomType.RoomTypeID = RoomNumber.RoomTypeID 
 left outer join RoomReservation on RoomReservation.RoomNumberID = RoomNumber.RoomNumberID 
 left outer join Reservation on RoomReservation.ReservationID = Reservation.ReservationID
 order by RoomReservation.ReservationID; 
@@ -65,20 +57,20 @@ order by RoomReservation.ReservationID;
 -- 0 Rows Returned
 -- -------------------
 select Reservation.ReservationID, Reservation.StartDate,Reservation.EndDate,RoomReservation.RoomNumberID,sum(Reservation.NumberOfAdults+Reservation.NumberOfChildren) 'TotalGuests'
-from Reservation,RoomReservation
+from Reservation
+inner join RoomReservation on Reservation.ReservationID = RoomReservation.ReservationID 
 where 
 (Reservation.EndDate between '2023-04-01'and'2023-04-30' or 
-Reservation.StartDate between '2023-04-01'and'2023-04-30')and 
-Reservation.ReservationID = RoomReservation.ReservationID and 
+Reservation.StartDate between '2023-04-01'and'2023-04-30') AND
 Reservation.NumberOfAdults+Reservation.NumberOfChildren>2
 group by Reservation.ReservationID, Reservation.StartDate,Reservation.EndDate,RoomReservation.RoomNumberID; 
 -- 6.Write a query that returns a list of all guest names and the number of reservations per guest, 
 -- sorted starting with the guest with the most reservations and then by the guest's last name.
 -- 11 Rows Returned
 -- -------------------
-select Guest.GuestFirstName,Guest.GuestLastName, count(GuestReservation.ReservationID) as 'TotalReservation'
+select Guest.GuestFirstName,Guest.GuestLastName, count(Reservation.ReservationID) as 'TotalReservation'
 from Guest
-left outer join GuestReservation on Guest.GuestID = GuestReservation.GuestID
+left outer join Reservation on Guest.GuestID = Reservation.GuestID
 group BY Guest.GuestFirstName,Guest.GuestLastName
 order by TotalReservation DESC,Guest.GuestLastName ASC ; 
 
